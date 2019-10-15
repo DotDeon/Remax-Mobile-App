@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "911446517333",
+    "firebase_url": "https://remax-info.firebaseio.com",
+    "project_id": "remax-info",
+    "storage_bucket": "remax-info.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911446517333:android:b37468a27d96f14d3ad6dc",
+        "android_client_info": {
+          "package_name": "com.example.remaxinfoagent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911446517333-qmdgis94tksfd61trm6aveijn41el1ar.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd15WKpokWbKKLcHPh38GaQXP2hl9XTCo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911446517333-qmdgis94tksfd61trm6aveijn41el1ar.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "911446517333-d45j1sp6eh1ihhquo75daobiqrq6j3r8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.remax.infoglobe"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
