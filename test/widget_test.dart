@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:npa/Screens/Login/index.dart';
+import 'package:remaxinfoagent/Screens/Login/index.dart';
 import 'package:remaxinfoagent/main.dart';
 
 void main() {
