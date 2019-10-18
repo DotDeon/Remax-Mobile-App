@@ -52,7 +52,7 @@ class SignUpScreenState extends State<SignUpScreen>
     setState(() {});
     final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
     await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password);
-    Navigator.pushReplacementNamed(context,'login');
+    Navigator.push(context, new MaterialPageRoute(builder: (context) => new LoginScreen()));
   }
 
   Future<Null> _playAnimation() async {

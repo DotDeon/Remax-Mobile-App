@@ -87,6 +87,7 @@ with TickerProviderStateMixin {
       try {
         if(_email == 'remax' && _password == 'remax')
         {
+          
         Navigator.push(context, new MaterialPageRoute(builder: (context) => new SignUpScreen()));
         }
         else
