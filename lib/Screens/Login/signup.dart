@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:remaxinfoagent/Screens/Home/index.dart';
 import 'package:remaxinfoagent/Screens/Login/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'styles.dart';
@@ -49,10 +50,12 @@ class SignUpScreenState extends State<SignUpScreen>
   }
 
   void _validateAndSubmit() async {
+    
+   // print('buttons');
     setState(() {});
     final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
     await FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password);
-    Navigator.push(context, new MaterialPageRoute(builder: (context) => new LoginScreen()));
+    Navigator.push(context, new MaterialPageRoute(builder: (context) => new HomeScreen()));
   }
 
   Future<Null> _playAnimation() async {
@@ -203,12 +206,14 @@ class SignUpScreenState extends State<SignUpScreen>
                                   ],
                                 ),
                               ),
-                              new InkWell(
-                                  onTap: () {
-                                    final form = _formKey.currentState;
-                                    form.save();
-                                    _validateAndSubmit();
-                                  },
+                              FlatButton(
+                                  onPressed: () {
+                                  setState(() {
+                                   final form = _formKey.currentState;
+                                   form.save();
+                                 // print('button111s');
+                                  _validateAndSubmit();
+                                  });},
                                   //padding: const EdgeInsets.only(bottom: 50.0),
                                   child: new Container(
                                     width: 320.0,

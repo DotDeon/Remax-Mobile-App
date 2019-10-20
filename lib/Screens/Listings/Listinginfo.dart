@@ -9,6 +9,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'listinglist.dart';
 
 _ListingInfo liststate;
+String hlistID;
+String hlistType;
+String hLoad;
 
 class _Page {
   _Page({this.widget});
@@ -28,14 +31,11 @@ List<_Page> _allPages = <_Page>[
 ];
 
 class ListingInfo extends StatefulWidget {
-  ListingInfo(String _listID, String _listType, {this.listID, this.listType});
   final formkey = GlobalKey<FormState>();
-  final String listType;
-  final String listID;
 
   @override
   createState() {
-    liststate = _ListingInfo(this.listID, this.listType);
+    liststate = new _ListingInfo();
     return liststate;
   }
 }
@@ -82,15 +82,15 @@ class Listing {
   String sec_Camera;
   String sec_SecGate;
   String sec_Add;
-  }
+}
 
 class _ListingInfo extends State<ListingInfo>
     with SingleTickerProviderStateMixin {
-  _ListingInfo(this.listID, this.listType);
+  _ListingInfo();
   TabController _controller;
   final db = Firestore.instance;
   List<Listing> list;
-  String listID = mlistID;
+  String listID = hlistID;
   String userid;
   String listType = mlistType;
   String detail_salerental;
@@ -135,25 +135,22 @@ class _ListingInfo extends State<ListingInfo>
 
   @override
   void initState() {
-  
     super.initState();
-      readData();
+    
     _getuser();
+    readData();
+
     _controller = TabController(vsync: this, length: _allPages.length);
+    // setState(() {});
+    //Navigator.pop(context);
   }
 
-  void _getuser() async {
+  Future<void> _getuser() async {
     final FirebaseUser user = await FirebaseAuth.instance.currentUser();
     userid = user.uid.toString();
-    print(mlistType + mlistID + '1');
-    if(init1 == '0')
-    {
-      initState();
-      init1 = '1';
-    }
   }
 
-    void mail() async {
+  void mail() async {
     String username = 'remaxinfoagent@gmail.com';
     String password = 'kYqN7RyWCHjzh2rL';
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
@@ -169,10 +166,10 @@ class _ListingInfo extends State<ListingInfo>
       ..recipients.add(email)
       //  ..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
       // ..bccRecipients.add(Address('bccAddress@example.com'))
-      ..subject = '$detail_Unit $detail_StreetName $detail_Suburb  ${DateTime.now()}'
-      ..text = 'DETAILS \n Sales/Rental: $detail_salerental \n Complex Name: $detail_ComplexName \n Erf No: $detail_ErfNo \n Street Name: $detail_StreetName \n Suburb: $detail_Suburb \n Unit: $detail_Unit \n Unit Size: $detail_UnitSize \n PRICE \n Nett Price: $price_nett \n Market Price: $price_MarkP \n Rates: $price_Rates \n Levey:  $price_leveys \n OWNDER DETAILS \n Name: $own_Name \n Surname: $own_Surname \n Tel: $own_Tel \n Email: $own_Email \n Married in community of property: $own_Married \n TENANT \n Name: $ten_Name \n Surname $ten_Surname \n Tel: $ten_Tel \n Email: $ten_Email \n BEDROOMS \n No of Bedrooms: $bed_No \n Additional Info: $bed_Add \n BATHROOMS \n No of Bathrooms: $bath_No \n Guest Bathrooms: $bath_Guest \n Additional Info: $bath_Add \n INTERIOR \n Interior Detail: $int_Detail \n Interior Additional Info: $int_Add \n EXTERIOR \n Garden: $ext_Garden \n Pool: $ext_Pool \n Jacuzzi: $ext_Jacuzzi \n Braai: $ext_Braai \n Additional Info: $ext_add \n SECURITY \n Electric Fence: $sec_eFence \n Electric Gate: $sec_eGate \n Intercom: $sec_Intercom \n Camera: $sec_Camera \n Security Gate: $sec_SecGate \n Additional Info: $sec_Add';
-        
-   
+      ..subject =
+          '$detail_Unit $detail_StreetName $detail_Suburb  ${DateTime.now()}'
+      ..text =
+          'DETAILS \n Sales/Rental: $detail_salerental \n Complex Name: $detail_ComplexName \n Erf No: $detail_ErfNo \n Street Name: $detail_StreetName \n Suburb: $detail_Suburb \n Unit: $detail_Unit \n Unit Size: $detail_UnitSize \n PRICE \n Nett Price: $price_nett \n Market Price: $price_MarkP \n Rates: $price_Rates \n Levey:  $price_leveys \n OWNDER DETAILS \n Name: $own_Name \n Surname: $own_Surname \n Tel: $own_Tel \n Email: $own_Email \n Married in community of property: $own_Married \n TENANT \n Name: $ten_Name \n Surname $ten_Surname \n Tel: $ten_Tel \n Email: $ten_Email \n BEDROOMS \n No of Bedrooms: $bed_No \n Additional Info: $bed_Add \n BATHROOMS \n No of Bathrooms: $bath_No \n Guest Bathrooms: $bath_Guest \n Additional Info: $bath_Add \n INTERIOR \n Interior Detail: $int_Detail \n Interior Additional Info: $int_Add \n EXTERIOR \n Garden: $ext_Garden \n Pool: $ext_Pool \n Jacuzzi: $ext_Jacuzzi \n Braai: $ext_Braai \n Additional Info: $ext_add \n SECURITY \n Electric Fence: $sec_eFence \n Electric Gate: $sec_eGate \n Intercom: $sec_Intercom \n Camera: $sec_Camera \n Security Gate: $sec_SecGate \n Additional Info: $sec_Add';
 
     try {
       final sendReport = await send(message, smtpServer);
@@ -184,12 +181,14 @@ class _ListingInfo extends State<ListingInfo>
       }
     }
   }
-      
- Future<void> readData() async {
-   if (mlistID != '0') {
-     print('List ID' + mlistID.toString());
-    DocumentSnapshot snapshot = await db.collection('Listings').document(mlistID).get();
-    setState(() {
+
+  Future<void> readData() async {
+    //await new Future.delayed(new Duration(seconds: 3));
+    if (hlistID != '0') {
+      print('List ID' + hlistID.toString());
+      DocumentSnapshot snapshot =
+          await db.collection('Listings').document(hlistID).get();
+      setState(() {
         detail_salerental = snapshot.data['lst_Type'];
         detail_ComplexName = snapshot.data['lst_ComplexName'];
         detail_ErfNo = snapshot.data['lst_Erf_No'];
@@ -229,17 +228,16 @@ class _ListingInfo extends State<ListingInfo>
         sec_SecGate = snapshot.data['sec_SecGate'];
         sec_Add = snapshot.data['sec_Add'];
         print(snapshot.data['lst_Type']);
-      } );
-   }
-     // setState(() => mlistID = mlistID);
-      initState();
+      });
+    }
+
     return;
   }
 
   updateData() async {
     await Firestore.instance
         .collection('Listings')
-        .document(mlistID)
+        .document(hlistID)
         .updateData({
       'lst_AppType': mlistType,
       'lst_Archive': '0',
@@ -423,8 +421,8 @@ class _ListingInfo extends State<ListingInfo>
       'sec_SecGate': sec_SecGate,
       'sec_Add': sec_Add
     });
-    setState(() => listID = ref.documentID);
-    print(ref.documentID);
+    setState(() => hlistID = ref.documentID);
+    // print(ref.documentID);
   }
 
   @override
@@ -436,6 +434,15 @@ class _ListingInfo extends State<ListingInfo>
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
+        actions: <Widget>[
+          // action button
+          new IconButton(
+              icon: new Icon(Icons.home),
+              tooltip: 'Home',
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, '/home');
+              })
+        ],
         title: const Text('List'),
         backgroundColor: Color.fromRGBO(207, 0, 0, 1),
       ),
@@ -445,7 +452,7 @@ class _ListingInfo extends State<ListingInfo>
         backgroundColor: Color.fromRGBO(207, 0, 0, 1),
         label: Text("Save"),
         onPressed: () {
-          if (mlistID == '0') {
+          if (hlistID == '0') {
             createData();
           } else {
             updateData();
@@ -478,7 +485,7 @@ class _ListingInfo extends State<ListingInfo>
             IconButton(
               icon: Icon(Icons.email),
               onPressed: () {
-              mail();
+                mail();
               },
             ),
           ],

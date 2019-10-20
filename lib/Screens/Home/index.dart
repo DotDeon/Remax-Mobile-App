@@ -4,6 +4,7 @@ import 'package:flutter/animation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:async';
 import 'styles.dart';
+import 'package:remaxinfoagent/Screens/Listings/listinglist.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -26,7 +27,6 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Animation<Alignment> buttonSwingAnimation;
   Animation<EdgeInsets> listSlidePosition;
   Animation<Color> fadeScreenAnimation;
-  String userId = '';
   var animateStatus = 0;
   List<String> months = [];
   String textValue = 'Hello World !';
@@ -39,8 +39,8 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
     try {
       final FirebaseUser user = await FirebaseAuth.instance.currentUser();
-      userId = user.uid.toString();
-      if (userId.length > 0 && userId != null) {
+      h_userId = user.uid.toString();
+      if (h_userId.length > 0 && h_userId != null) {
         return;
       } else {
         Navigator.pushReplacementNamed(context, '/login');

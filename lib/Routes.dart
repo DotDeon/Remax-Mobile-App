@@ -50,6 +50,11 @@ class Routes {
               builder: (_) => new ListingList('1', uid ),
               settings: settings,
             );
+                       case '/lstDetails':
+            return new MyCustomRoute(
+              builder: (_) => new prefix0.ListingInfo(),
+              settings: settings,
+            );
             case '/ToDo':
             return new MyCustomRoute(
               builder: (_) => new ToDo(),

@@ -11,9 +11,11 @@ class ListingInfoW extends StatefulWidget {
 
 class _ListingInfoW extends State<ListingInfoW> {
   @override
+  
   Widget build(BuildContext context) {
+    
     return Scaffold(
-        body: Container(
+        body: SingleChildScrollView(
             padding:
                 const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             child: Builder(
@@ -79,7 +81,7 @@ class _ListingPrice extends State<ListingInfoPrice> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
+        body: SingleChildScrollView(
             padding:
                 const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             child: Builder(
@@ -128,7 +130,7 @@ class _ListingOwner extends State<ListingInfoOwner> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
+        body: SingleChildScrollView(
             padding:
                 const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             child: Builder(
@@ -181,7 +183,7 @@ class _ListingInfoTenant extends State<ListingInfoTenant> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
+        body: SingleChildScrollView(
             padding:
                 const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             child: Builder(
@@ -229,7 +231,7 @@ class _ListingInfoBed extends State<ListingInfoBed> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
+        body: SingleChildScrollView(
             padding:
                 const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             child: Builder(
@@ -263,7 +265,7 @@ class ListingInfoBath extends StatefulWidget {
 class _ListingInfoBath extends State<ListingInfoBath> {
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
+        body: SingleChildScrollView(
             padding:
                 const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             child: Builder(
@@ -307,7 +309,7 @@ class ListingInfoIn extends StatefulWidget {
 class _ListingInfoIn extends State<ListingInfoIn> {
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
+        body: SingleChildScrollView(
             padding:
                 const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             child: Builder(
@@ -347,7 +349,7 @@ class _ListingInfoExterior extends State<ListingInfoExterior> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
+        body: SingleChildScrollView(
             padding:
                 const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             child: Builder(
@@ -401,7 +403,7 @@ class _ListingInfoSec extends State<ListingInfoSec> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
+        body: SingleChildScrollView(
             padding:
                 const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             child: Builder(

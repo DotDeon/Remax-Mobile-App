@@ -5,12 +5,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/animation.dart';
 import 'package:mailer/mailer.dart';
 import 'package:remaxinfoagent/widgets/Listinginfo.dart';
+import 'package:remaxinfoagent/Screens/Home/index.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:remaxinfoagent/Screens/Listings/Listinginfo.dart';
 import 'package:mailer/smtp_server.dart';
 
 String mlistID;
 String mlistType;
+String h_userId;
 
 class ListingList extends StatefulWidget {
   final String listType;
@@ -28,7 +30,7 @@ class ListingListState extends State<ListingList> {
   TextEditingController editingController = TextEditingController();
   String archiveflag = '0';
   final db = Firestore.instance;
-  final duplicateItems = List<String>.generate(10000, (i) => "Item $i");
+  //final duplicateItems = List<String>.generate(10000, (i) => "Item $i");
   var items = List<String>();
   String userid = '';
   String listType;
@@ -95,11 +97,11 @@ class ListingListState extends State<ListingList> {
     }
     stream = db
         .collection('Listings')
-        .where('lst_UserId', isEqualTo: userid)
+        .where('UserID', isEqualTo: h_userId)
         .where('lst_Archive', isEqualTo: archiveflag)
         .where('lst_AppType', isEqualTo: iType)
         .snapshots();
-    items.addAll(duplicateItems);
+    //items.addAll(duplicateItems);
     super.initState();
   }
 
@@ -186,7 +188,9 @@ class ListingListState extends State<ListingList> {
   }
 
   Card buildItem(DocumentSnapshot doc) {
+
     return Card(
+
       child: new Slidable(
         actionPane: SlidableDrawerActionPane(),
         actionExtentRatio: 0.25,
@@ -218,12 +222,13 @@ class ListingListState extends State<ListingList> {
               color: Colors.indigo,
               icon: Icons.edit_attributes,
               onTap: () {
-                mlistID = doc.documentID.toString();
-                mlistType = iType.toString();
+                hlistID = doc.documentID.toString();
+                hlistType = iType.toString();
+                hLoad = '0';
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ListingInfo(mlistID, mlistType)));
+                        builder: (context) => ListingInfo()));
               }),
         ],
         secondaryActions: <Widget>[
@@ -244,7 +249,7 @@ class ListingListState extends State<ListingList> {
 
   void filterSearchResults(String query) {
     List<String> dummySearchList = List<String>();
-    dummySearchList.addAll(duplicateItems);
+   // dummySearchList.addAll(duplicateItems);
     if (query.isNotEmpty) {
       List<String> dummyListData = List<String>();
       dummySearchList.forEach((item) {
@@ -260,7 +265,7 @@ class ListingListState extends State<ListingList> {
     } else {
       setState(() {
         items.clear();
-        items.addAll(duplicateItems);
+        //items.addAll(duplicateItems);
       });
     }
   }
@@ -287,11 +292,10 @@ class ListingListState extends State<ListingList> {
         backgroundColor: Color.fromRGBO(207, 0, 0, 1),
         label: const Text('Add'),
         onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ListingInfo('0', listType)));
-        },
+          hlistID = '0';
+          hlistType = iType.toString();
+          Navigator.pushReplacementNamed(context, '/lstDetails');
+        }
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: Container(
@@ -340,7 +344,7 @@ class ListingListState extends State<ListingList> {
                       setState(() {
                         stream = db
                             .collection('Listings')
-                            .where('lst_UserId', isEqualTo: userid)
+                            .where('UserID', isEqualTo: h_userId)
                             .where('lst_Archive', isEqualTo: '1')
                             .where('lst_AppType', isEqualTo: iType)
                             .snapshots();
@@ -355,7 +359,7 @@ class ListingListState extends State<ListingList> {
                       setState(() {
                         stream = db
                             .collection('Listings')
-                            .where('lst_UserId', isEqualTo: userid)
+                            .where('UserID', isEqualTo: h_userId)
                             .where('lst_Archive', isEqualTo: '0')
                             .where('lst_AppType', isEqualTo: iType)
                             .snapshots();
